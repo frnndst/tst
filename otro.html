@@ -62,12 +62,12 @@
 <script>
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localtest.me/CSRF/referer-based/test.php', true);
+    xhr.open("GET", 'https://dtvott-abc.akamaized.net/dash_live_1057/manifest.mpd?a', true);
     
     
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     // Try CRLF to spoof referer
-    xhr.setRequestHeader("osef", "http://attacker.com%0D%0AReferer:%20attacker.com");
+    xhr.setRequestHeader("Origin", "dtvott-abc.akamaized.net");
     
     xhr.onreadystatechange = function() { 
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
@@ -80,4 +80,3 @@
     
     </script>
 </html>
-
